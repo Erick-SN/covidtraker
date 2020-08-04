@@ -9,6 +9,7 @@ import {
 import InfoBox from './components/InfoBox';
 import Map from './components/Map';
 import Table from './components/Table';
+import { sortData } from './helpers/sort';
 import './App.css';
 
 function App() {
@@ -37,7 +38,8 @@ function App() {
             name: country.country,
             value: country.countryInfo.iso2,
           }));
-          setTableData(data);
+          const sortedData = sortData(data);
+          setTableData(sortedData);
           setCountries(countries);
         });
     };
