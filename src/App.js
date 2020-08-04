@@ -6,9 +6,10 @@ import {
   Card,
   CardContent,
 } from '@material-ui/core';
-import InfoBox from './components/InfoBox';
 import Map from './components/Map';
 import Table from './components/Table';
+import InfoBox from './components/InfoBox';
+import LineGraph from './components/LineGraph';
 import { sortData } from './helpers/sort';
 import './App.css';
 
@@ -108,6 +109,7 @@ function App() {
           <h3>Live Cases by country</h3>
           <Table countries={tableData} />
           <h3>Worldwide cases</h3>
+          <LineGraph />
         </CardContent>
       </Card>
     </div>
