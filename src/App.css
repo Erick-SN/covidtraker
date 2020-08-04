@@ -4,6 +4,11 @@
 body {
   background-color: #f5f6fa;
 }
+.app {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 20px;
+}
 .app__header {
   display: flex;
   align-items: center;
@@ -11,7 +16,17 @@ body {
   justify-content: space-between;
 }
 
+.app__left {
+  flex: 0.9;
+}
+
 .app__stats {
   display: flex;
   justify-content: space-between;
+}
+
+@media (max-width: 900px) {
+  .app {
+    flex-direction: column;
+  }
 }
