@@ -26,7 +26,7 @@ const options = {
       {
         type: 'time',
         time: {
-          format: 'MM/DD/YY',
+          parser: 'MM/DD/YY',
           tooltipFormat: 'll',
         },
       },
@@ -47,30 +47,31 @@ const options = {
   },
 };
 
-const LineGraph = ({ casesType = 'cases' }) => {
-  const [data, setData] = useState({});
-  //https://disease.sh/v3/covid-19/historical/all?lastdays=120
-  const buildChartData = (data, casesType = 'cases') => {
-    const chartData = [];
-    let lastDataPoint;
-    for (let date in data.cases) {
-      if (lastDataPoint) {
-        const newDataPoint = {
-          x: date,
-          y: data[casesType][date] - lastDataPoint,
-        };
-        chartData.push(newDataPoint);
-      }
-      lastDataPoint = data[casesType][date];
+const buildChartData = (data, casesType) => {
+  const chartData = [];
+  let lastDataPoint;
+  for (let date in data.cases) {
+    if (lastDataPoint) {
+      const newDataPoint = {
+        x: date,
+        y: data[casesType][date] - lastDataPoint,
+      };
+      chartData.push(newDataPoint);
     }
-    return chartData;
-  };
+    lastDataPoint = data[casesType][date];
+  }
+  return chartData;
+};
+
+const LineGraph = ({ className, casesType }) => {
+  const [data, setData] = useState({});
+
   useEffect(() => {
     const fetchData = async () => {
       await fetch(`https://disease.sh/v3/covid-19/historical/all?lastdays=120`)
         .then((res) => res.json())
         .then((data) => {
-          const charData = buildChartData(data);
+          let charData = buildChartData(data, casesType);
           setData(charData);
         });
     };
@@ -79,7 +80,7 @@ const LineGraph = ({ casesType = 'cases' }) => {
 
   return (
     <>
-      <div>
+      <div className={className}>
         {data?.length > 0 && (
           <Line
             options={options}
